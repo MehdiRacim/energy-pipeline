@@ -13,10 +13,6 @@ def fetch_weather(
     start_date: str = "2023-01-01",
     end_date: str = None
 ) -> pd.DataFrame:
-    """
-    Récupère les données météo horaires depuis l'API Open-Meteo.
-    Par défaut : Paris, depuis le 1er janvier 2023.
-    """
     if end_date is None:
         end_date = str(date.today())
 
@@ -51,13 +47,15 @@ def fetch_weather(
 
 
 def save_weather(df: pd.DataFrame) -> Path:
-    """Sauvegarde le DataFrame en Parquet dans data/raw/"""
     output_dir = Path("data/raw")
     output_dir.mkdir(parents=True, exist_ok=True)
-
     output_path = output_dir / "weather.parquet"
-    df.to_parquet(output_path, index=False)
-
+    df.to_parquet(
+        output_path,
+        index=False,
+        coerce_timestamps="us",
+        allow_truncated_timestamps=True
+    )
     logger.success(f"Fichier sauvegardé : {output_path}")
     return output_path
 

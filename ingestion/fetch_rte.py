@@ -8,10 +8,6 @@ def fetch_consumption(
     start_date: str = "2023-01-01",
     end_date: str = "2026-03-17"
 ) -> pd.DataFrame:
-    """
-    Récupère la consommation électrique française depuis l'API RTE (éCO2mix).
-    Données disponibles par tranche de 30 minutes.
-    """
     logger.info(f"Récupération conso électrique du {start_date} au {end_date}...")
 
     url = "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def/exports/json"
@@ -38,9 +34,8 @@ def fetch_consumption(
         return pd.DataFrame()
 
     df = pd.DataFrame(records)
-    df["date_heure"] = pd.to_datetime(df["date_heure"])
+    df["date_heure"] = pd.to_datetime(df["date_heure"], utc=True).dt.tz_convert("Europe/Paris")
     df = df.sort_values("date_heure").reset_index(drop=True)
-
     df = df.dropna(subset=["consommation"])
     df["consommation"] = pd.to_numeric(df["consommation"], errors="coerce")
 
@@ -49,13 +44,15 @@ def fetch_consumption(
 
 
 def save_consumption(df: pd.DataFrame) -> Path:
-    """Sauvegarde le DataFrame en Parquet dans data/raw/"""
     output_dir = Path("data/raw")
     output_dir.mkdir(parents=True, exist_ok=True)
-
     output_path = output_dir / "consumption.parquet"
-    df.to_parquet(output_path, index=False)
-
+    df.to_parquet(
+        output_path,
+        index=False,
+        coerce_timestamps="us",
+        allow_truncated_timestamps=True
+    )
     logger.success(f"Fichier sauvegardé : {output_path}")
     return output_path
 

@@ -1,0 +1,15 @@
+{
+  "mae": 140857.87891125877,
+  "mape": 20.266283383334624,
+  "features": [
+    "temp_moy",
+    "temp_min",
+    "temp_max",
+    "vent_moy",
+    "nuages_moy",
+    "est_weekend",
+    "mois",
+    "conso_semaine_precedente"
+  ],
+  "target": "conso_totale_mwh"
+}

@@ -1,0 +1,1182 @@
+[0m16:01:16.602961 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70c6ed14aed0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70c6ed14aa10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70c6ed14a8d0>]}
+
+
+============================== 16:01:16.605889 | 2ce05ed0-edb2-42ab-b481-9df52b3f702d ==============================
+[0m16:01:16.605889 [info ] [MainThread]: Running with dbt=1.8.0
+[0m16:01:16.606446 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/mehdi/.dbt', 'log_path': '/home/mehdi/energy-pipeline/dbt/logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'invocation_command': 'dbt debug', 'send_anonymous_usage_stats': 'True'}
+[0m16:01:16.611592 [info ] [MainThread]: dbt version: 1.8.0
+[0m16:01:16.611971 [info ] [MainThread]: python version: 3.11.9
+[0m16:01:16.612333 [info ] [MainThread]: python path: /home/mehdi/energy-pipeline/venv/bin/python
+[0m16:01:16.612679 [info ] [MainThread]: os info: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+[0m16:01:16.662135 [info ] [MainThread]: Using profiles dir at /home/mehdi/.dbt
+[0m16:01:16.663029 [info ] [MainThread]: Using profiles.yml file at /home/mehdi/.dbt/profiles.yml
+[0m16:01:16.663578 [info ] [MainThread]: Using dbt_project.yml file at /home/mehdi/energy-pipeline/dbt/dbt_project.yml
+[0m16:01:16.664373 [info ] [MainThread]: adapter type: postgres
+[0m16:01:16.665079 [info ] [MainThread]: adapter version: 1.8.0
+[0m16:01:16.728391 [info ] [MainThread]: Configuration:
+[0m16:01:16.728882 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m16:01:16.729154 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m16:01:16.729379 [info ] [MainThread]: Required dependencies:
+[0m16:01:16.729618 [debug] [MainThread]: Executing "git --help"
+[0m16:01:16.730976 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--config-env=<name>=<envvar>] <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m16:01:16.731294 [debug] [MainThread]: STDERR: "b''"
+[0m16:01:16.731503 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m16:01:16.731728 [info ] [MainThread]: Connection:
+[0m16:01:16.731945 [info ] [MainThread]:   host: localhost
+[0m16:01:16.732148 [info ] [MainThread]:   port: 5432
+[0m16:01:16.732350 [info ] [MainThread]:   user: energy_user
+[0m16:01:16.732639 [info ] [MainThread]:   database: energy_db
+[0m16:01:16.732848 [info ] [MainThread]:   schema: public
+[0m16:01:16.733046 [info ] [MainThread]:   connect_timeout: 10
+[0m16:01:16.733241 [info ] [MainThread]:   role: None
+[0m16:01:16.733438 [info ] [MainThread]:   search_path: None
+[0m16:01:16.733633 [info ] [MainThread]:   keepalives_idle: 0
+[0m16:01:16.733826 [info ] [MainThread]:   sslmode: None
+[0m16:01:16.734016 [info ] [MainThread]:   sslcert: None
+[0m16:01:16.734205 [info ] [MainThread]:   sslkey: None
+[0m16:01:16.734423 [info ] [MainThread]:   sslrootcert: None
+[0m16:01:16.734635 [info ] [MainThread]:   application_name: dbt
+[0m16:01:16.734842 [info ] [MainThread]:   retries: 1
+[0m16:01:16.735254 [info ] [MainThread]: Registered adapter: postgres=1.8.0
+[0m16:01:16.774778 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m16:01:16.789441 [debug] [MainThread]: Using postgres connection "debug"
+[0m16:01:16.789745 [debug] [MainThread]: On debug: select 1 as id
+[0m16:01:16.789961 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m16:01:16.797615 [debug] [MainThread]: SQL status: SELECT 1 in 0.008 seconds
+[0m16:01:16.799303 [debug] [MainThread]: On debug: Close
+[0m16:01:16.799776 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m16:01:16.800376 [info ] [MainThread]: [32mAll checks passed![0m
+[0m16:01:16.801062 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 0.22994463, "process_user_time": 0.955609, "process_kernel_time": 0.118495, "process_mem_max_rss": "112768", "process_out_blocks": "16", "process_in_blocks": "0"}
+[0m16:01:16.801437 [debug] [MainThread]: Command `dbt debug` succeeded at 16:01:16.801363 after 0.23 seconds
+[0m16:01:16.801656 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m16:01:16.801860 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70c6ed19a210>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70c6eccf8750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70c6ec59c490>]}
+[0m16:01:16.802121 [debug] [MainThread]: Flushing usage events
+[0m16:04:20.765713 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5c8df090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5c8de890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5c8df310>]}
+
+
+============================== 16:04:20.767599 | 74cbacda-59e0-4aa1-b167-890622d462f4 ==============================
+[0m16:04:20.767599 [info ] [MainThread]: Running with dbt=1.8.0
+[0m16:04:20.768148 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/mehdi/.dbt', 'debug': 'False', 'version_check': 'True', 'log_path': '/home/mehdi/energy-pipeline/dbt/logs', 'fail_fast': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'log_format': 'default', 'invocation_command': 'dbt run', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m16:04:20.872898 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5bd41810>]}
+[0m16:04:20.910085 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5e422d50>]}
+[0m16:04:20.910713 [info ] [MainThread]: Registered adapter: postgres=1.8.0
+[0m16:04:20.955540 [debug] [MainThread]: checksum: dbb12d416fdb55e3665e4828703bbedf40c5c90ed7ca6ff39bbbfb29b12b0a92, vars: {}, profile: , target: , version: 1.8.0
+[0m16:04:20.956007 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:04:20.956313 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5b9bb310>]}
+[0m16:04:21.476921 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+The `tests` config has been renamed to `data_tests`. Please see
+https://docs.getdbt.com/docs/build/data-tests#new-data_tests-syntax for more
+information.
+[0m16:04:21.477463 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5bd80150>]}
+[0m16:04:21.641393 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5c8f3850>]}
+[0m16:04:21.699401 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5bd82490>]}
+[0m16:04:21.699793 [info ] [MainThread]: Found 2 models, 4 data tests, 428 macros
+[0m16:04:21.700068 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5b52cc90>]}
+[0m16:04:21.701213 [info ] [MainThread]: 
+[0m16:04:21.701625 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m16:04:21.704393 [debug] [ThreadPool]: Acquiring new postgres connection 'list_energy_db'
+[0m16:04:21.727498 [debug] [ThreadPool]: Using postgres connection "list_energy_db"
+[0m16:04:21.727849 [debug] [ThreadPool]: On list_energy_db: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "list_energy_db"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m16:04:21.728089 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:04:21.736936 [debug] [ThreadPool]: SQL status: SELECT 4 in 0.009 seconds
+[0m16:04:21.738126 [debug] [ThreadPool]: On list_energy_db: Close
+[0m16:04:21.739661 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_energy_db, now list_energy_db_public)
+[0m16:04:21.744104 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:04:21.744408 [debug] [ThreadPool]: On list_energy_db_public: BEGIN
+[0m16:04:21.744646 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m16:04:21.750462 [debug] [ThreadPool]: SQL status: BEGIN in 0.006 seconds
+[0m16:04:21.750756 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:04:21.751015 [debug] [ThreadPool]: On list_energy_db_public: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "list_energy_db_public"} */
+select
+      'energy_db' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public'
+  
+[0m16:04:21.759153 [debug] [ThreadPool]: SQL status: SELECT 1 in 0.008 seconds
+[0m16:04:21.760148 [debug] [ThreadPool]: On list_energy_db_public: ROLLBACK
+[0m16:04:21.760632 [debug] [ThreadPool]: On list_energy_db_public: Close
+[0m16:04:21.763854 [debug] [MainThread]: Using postgres connection "master"
+[0m16:04:21.764117 [debug] [MainThread]: On master: BEGIN
+[0m16:04:21.764325 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m16:04:21.769759 [debug] [MainThread]: SQL status: BEGIN in 0.005 seconds
+[0m16:04:21.770055 [debug] [MainThread]: Using postgres connection "master"
+[0m16:04:21.770386 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v', 'm')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m16:04:21.776171 [debug] [MainThread]: SQL status: SELECT 0 in 0.005 seconds
+[0m16:04:21.777020 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5819dc90>]}
+[0m16:04:21.777367 [debug] [MainThread]: On master: ROLLBACK
+[0m16:04:21.777849 [debug] [MainThread]: Using postgres connection "master"
+[0m16:04:21.778110 [debug] [MainThread]: On master: BEGIN
+[0m16:04:21.778647 [debug] [MainThread]: SQL status: BEGIN in 0.000 seconds
+[0m16:04:21.778929 [debug] [MainThread]: On master: COMMIT
+[0m16:04:21.779161 [debug] [MainThread]: Using postgres connection "master"
+[0m16:04:21.779363 [debug] [MainThread]: On master: COMMIT
+[0m16:04:21.779841 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:04:21.780103 [debug] [MainThread]: On master: Close
+[0m16:04:21.780477 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m16:04:21.780750 [info ] [MainThread]: 
+[0m16:04:21.783520 [debug] [Thread-1 (]: Began running node model.energy.stg_features
+[0m16:04:21.784005 [info ] [Thread-1 (]: 1 of 2 START sql view model public.stg_features ................................ [RUN]
+[0m16:04:21.784568 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_energy_db_public, now model.energy.stg_features)
+[0m16:04:21.784844 [debug] [Thread-1 (]: Began compiling node model.energy.stg_features
+[0m16:04:21.789579 [debug] [Thread-1 (]: Writing injected SQL for node "model.energy.stg_features"
+[0m16:04:21.790667 [debug] [Thread-1 (]: Began executing node model.energy.stg_features
+[0m16:04:21.817725 [debug] [Thread-1 (]: Writing runtime sql for node "model.energy.stg_features"
+[0m16:04:21.818838 [debug] [Thread-1 (]: Using postgres connection "model.energy.stg_features"
+[0m16:04:21.819144 [debug] [Thread-1 (]: On model.energy.stg_features: BEGIN
+[0m16:04:21.819398 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m16:04:21.825354 [debug] [Thread-1 (]: SQL status: BEGIN in 0.006 seconds
+[0m16:04:21.825654 [debug] [Thread-1 (]: Using postgres connection "model.energy.stg_features"
+[0m16:04:21.825939 [debug] [Thread-1 (]: On model.energy.stg_features: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "model.energy.stg_features"} */
+
+  create view "energy_db"."public"."stg_features__dbt_tmp"
+    
+    
+  as (
+    WITH source AS (
+    SELECT * FROM public.raw_features
+),
+
+cleaned AS (
+    SELECT
+        date_heure::TIMESTAMP                    AS date_heure,
+        temperature_2m::FLOAT                    AS temperature,
+        windspeed_10m::FLOAT                     AS vent,
+        cloudcover::FLOAT                        AS nuages,
+        shortwave_radiation::FLOAT               AS radiation_solaire,
+        consommation::FLOAT                      AS consommation_mw,
+        prevision_j1::FLOAT                      AS prevision_j1_mw,
+        hour::INT                                AS heure,
+        dayofweek::INT                           AS jour_semaine,
+        month::INT                               AS mois,
+        is_weekend::INT                          AS est_weekend,
+        temp_24h_avg::FLOAT                      AS temp_moy_24h,
+        temp_24h_min::FLOAT                      AS temp_min_24h,
+        temp_24h_max::FLOAT                      AS temp_max_24h
+    FROM source
+    WHERE consommation_mw IS NOT NULL
+      AND temperature IS NOT NULL
+      AND date_heure IS NOT NULL
+)
+
+SELECT * FROM cleaned
+  );
+[0m16:04:21.828375 [debug] [Thread-1 (]: Postgres adapter: Postgres error: column "consommation_mw" does not exist
+LINE 28:     WHERE consommation_mw IS NOT NULL
+                   ^
+HINT:  Perhaps you meant to reference the column "source.consommation".
+
+[0m16:04:21.828657 [debug] [Thread-1 (]: On model.energy.stg_features: ROLLBACK
+[0m16:04:21.829178 [debug] [Thread-1 (]: On model.energy.stg_features: Close
+[0m16:04:21.833269 [debug] [Thread-1 (]: Database Error in model stg_features (models/staging/stg_features.sql)
+  column "consommation_mw" does not exist
+  LINE 28:     WHERE consommation_mw IS NOT NULL
+                     ^
+  HINT:  Perhaps you meant to reference the column "source.consommation".
+  compiled code at target/run/energy/models/staging/stg_features.sql
+[0m16:04:21.834400 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '74cbacda-59e0-4aa1-b167-890622d462f4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5c80b6d0>]}
+[0m16:04:21.834944 [error] [Thread-1 (]: 1 of 2 ERROR creating sql view model public.stg_features ....................... [[31mERROR[0m in 0.05s]
+[0m16:04:21.835346 [debug] [Thread-1 (]: Finished running node model.energy.stg_features
+[0m16:04:21.837019 [debug] [Thread-3 (]: Began running node model.energy.daily_energy_weather
+[0m16:04:21.837347 [info ] [Thread-3 (]: 2 of 2 SKIP relation public.daily_energy_weather ............................... [[33mSKIP[0m]
+[0m16:04:21.837640 [debug] [Thread-3 (]: Finished running node model.energy.daily_energy_weather
+[0m16:04:21.839412 [debug] [MainThread]: Using postgres connection "master"
+[0m16:04:21.839674 [debug] [MainThread]: On master: BEGIN
+[0m16:04:21.839959 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m16:04:21.845293 [debug] [MainThread]: SQL status: BEGIN in 0.005 seconds
+[0m16:04:21.845590 [debug] [MainThread]: On master: COMMIT
+[0m16:04:21.845851 [debug] [MainThread]: Using postgres connection "master"
+[0m16:04:21.846051 [debug] [MainThread]: On master: COMMIT
+[0m16:04:21.846434 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:04:21.846673 [debug] [MainThread]: On master: Close
+[0m16:04:21.846971 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:04:21.847206 [debug] [MainThread]: Connection 'model.energy.stg_features' was properly closed.
+[0m16:04:21.847416 [info ] [MainThread]: 
+[0m16:04:21.847662 [info ] [MainThread]: Finished running 1 view model, 1 table model in 0 hours 0 minutes and 0.15 seconds (0.15s).
+[0m16:04:21.848062 [debug] [MainThread]: Command end result
+[0m16:04:21.870564 [info ] [MainThread]: 
+[0m16:04:21.871304 [info ] [MainThread]: [31mCompleted with 1 error and 0 warnings:[0m
+[0m16:04:21.871607 [info ] [MainThread]: 
+[0m16:04:21.871927 [error] [MainThread]:   Database Error in model stg_features (models/staging/stg_features.sql)
+  column "consommation_mw" does not exist
+  LINE 28:     WHERE consommation_mw IS NOT NULL
+                     ^
+  HINT:  Perhaps you meant to reference the column "source.consommation".
+  compiled code at target/run/energy/models/staging/stg_features.sql
+[0m16:04:21.872175 [info ] [MainThread]: 
+[0m16:04:21.872446 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=1 TOTAL=2
+[0m16:04:21.873084 [debug] [MainThread]: Resource report: {"command_name": "run", "command_wall_clock_time": 1.1410182, "process_user_time": 1.793832, "process_kernel_time": 0.122655, "process_mem_max_rss": "123380", "process_in_blocks": "288", "process_out_blocks": "2568", "command_success": false}
+[0m16:04:21.873511 [debug] [MainThread]: Command `dbt run` failed at 16:04:21.873433 after 1.14 seconds
+[0m16:04:21.873807 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec6099f590>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec6099f6d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7aec5c8de210>]}
+[0m16:04:21.874084 [debug] [MainThread]: Flushing usage events
+[0m16:05:26.001226 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757992d49290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757992d9a990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757993793f90>]}
+
+
+============================== 16:05:26.003152 | 83c5fd7f-b460-4024-b255-6412be6fa7ea ==============================
+[0m16:05:26.003152 [info ] [MainThread]: Running with dbt=1.8.0
+[0m16:05:26.003810 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/mehdi/.dbt', 'fail_fast': 'False', 'warn_error': 'None', 'log_path': '/home/mehdi/energy-pipeline/dbt/logs', 'debug': 'False', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt run', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m16:05:26.113122 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757992d3ffd0>]}
+[0m16:05:26.152519 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x75799482f8d0>]}
+[0m16:05:26.153130 [info ] [MainThread]: Registered adapter: postgres=1.8.0
+[0m16:05:26.200638 [debug] [MainThread]: checksum: dbb12d416fdb55e3665e4828703bbedf40c5c90ed7ca6ff39bbbfb29b12b0a92, vars: {}, profile: , target: , version: 1.8.0
+[0m16:05:26.270828 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m16:05:26.271344 [debug] [MainThread]: Partial parsing: updated file: energy://models/staging/stg_features.sql
+[0m16:05:26.422530 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+The `tests` config has been renamed to `data_tests`. Please see
+https://docs.getdbt.com/docs/build/data-tests#new-data_tests-syntax for more
+information.
+[0m16:05:26.422931 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757992da6710>]}
+[0m16:05:26.540773 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757992d4aed0>]}
+[0m16:05:26.592360 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7579911cf750>]}
+[0m16:05:26.592742 [info ] [MainThread]: Found 2 models, 4 data tests, 428 macros
+[0m16:05:26.593036 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757990d2f150>]}
+[0m16:05:26.594182 [info ] [MainThread]: 
+[0m16:05:26.594630 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m16:05:26.597485 [debug] [ThreadPool]: Acquiring new postgres connection 'list_energy_db'
+[0m16:05:26.656626 [debug] [ThreadPool]: Using postgres connection "list_energy_db"
+[0m16:05:26.656961 [debug] [ThreadPool]: On list_energy_db: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "list_energy_db"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m16:05:26.657195 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:05:26.664916 [debug] [ThreadPool]: SQL status: SELECT 4 in 0.008 seconds
+[0m16:05:26.665887 [debug] [ThreadPool]: On list_energy_db: Close
+[0m16:05:26.666974 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_energy_db, now list_energy_db_public)
+[0m16:05:26.671234 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:05:26.671502 [debug] [ThreadPool]: On list_energy_db_public: BEGIN
+[0m16:05:26.671718 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m16:05:26.677565 [debug] [ThreadPool]: SQL status: BEGIN in 0.006 seconds
+[0m16:05:26.677861 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:05:26.678126 [debug] [ThreadPool]: On list_energy_db_public: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "list_energy_db_public"} */
+select
+      'energy_db' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public'
+  
+[0m16:05:26.680350 [debug] [ThreadPool]: SQL status: SELECT 1 in 0.002 seconds
+[0m16:05:26.681364 [debug] [ThreadPool]: On list_energy_db_public: ROLLBACK
+[0m16:05:26.681818 [debug] [ThreadPool]: On list_energy_db_public: Close
+[0m16:05:26.685295 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:26.685561 [debug] [MainThread]: On master: BEGIN
+[0m16:05:26.685772 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m16:05:26.691277 [debug] [MainThread]: SQL status: BEGIN in 0.005 seconds
+[0m16:05:26.691546 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:26.691819 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v', 'm')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m16:05:26.694492 [debug] [MainThread]: SQL status: SELECT 0 in 0.002 seconds
+[0m16:05:26.695336 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x75799118dfd0>]}
+[0m16:05:26.695675 [debug] [MainThread]: On master: ROLLBACK
+[0m16:05:26.696139 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:26.696390 [debug] [MainThread]: On master: BEGIN
+[0m16:05:26.697010 [debug] [MainThread]: SQL status: BEGIN in 0.000 seconds
+[0m16:05:26.697265 [debug] [MainThread]: On master: COMMIT
+[0m16:05:26.697478 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:26.697674 [debug] [MainThread]: On master: COMMIT
+[0m16:05:26.698098 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:05:26.698380 [debug] [MainThread]: On master: Close
+[0m16:05:26.698751 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m16:05:26.699015 [info ] [MainThread]: 
+[0m16:05:26.701324 [debug] [Thread-1 (]: Began running node model.energy.stg_features
+[0m16:05:26.701746 [info ] [Thread-1 (]: 1 of 2 START sql view model public.stg_features ................................ [RUN]
+[0m16:05:26.702199 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_energy_db_public, now model.energy.stg_features)
+[0m16:05:26.702528 [debug] [Thread-1 (]: Began compiling node model.energy.stg_features
+[0m16:05:26.706639 [debug] [Thread-1 (]: Writing injected SQL for node "model.energy.stg_features"
+[0m16:05:26.707093 [debug] [Thread-1 (]: Began executing node model.energy.stg_features
+[0m16:05:26.732079 [debug] [Thread-1 (]: Writing runtime sql for node "model.energy.stg_features"
+[0m16:05:26.732667 [debug] [Thread-1 (]: Using postgres connection "model.energy.stg_features"
+[0m16:05:26.732962 [debug] [Thread-1 (]: On model.energy.stg_features: BEGIN
+[0m16:05:26.733199 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m16:05:26.739026 [debug] [Thread-1 (]: SQL status: BEGIN in 0.006 seconds
+[0m16:05:26.739407 [debug] [Thread-1 (]: Using postgres connection "model.energy.stg_features"
+[0m16:05:26.739734 [debug] [Thread-1 (]: On model.energy.stg_features: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "model.energy.stg_features"} */
+
+  create view "energy_db"."public"."stg_features__dbt_tmp"
+    
+    
+  as (
+    WITH source AS (
+    SELECT * FROM public.raw_features
+),
+
+cleaned AS (
+    SELECT
+        date_heure::TIMESTAMP                    AS date_heure,
+        temperature_2m::FLOAT                    AS temperature,
+        windspeed_10m::FLOAT                     AS vent,
+        cloudcover::FLOAT                        AS nuages,
+        shortwave_radiation::FLOAT               AS radiation_solaire,
+        consommation::FLOAT                      AS consommation_mw,
+        prevision_j1::FLOAT                      AS prevision_j1_mw,
+        hour::INT                                AS heure,
+        dayofweek::INT                           AS jour_semaine,
+        month::INT                               AS mois,
+        is_weekend::INT                          AS est_weekend,
+        temp_24h_avg::FLOAT                      AS temp_moy_24h,
+        temp_24h_min::FLOAT                      AS temp_min_24h,
+        temp_24h_max::FLOAT                      AS temp_max_24h
+    FROM source
+    WHERE consommation IS NOT NULL
+      AND temperature_2m IS NOT NULL
+      AND date_heure IS NOT NULL
+)
+
+SELECT * FROM cleaned
+  );
+[0m16:05:26.744534 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 0.004 seconds
+[0m16:05:26.749667 [debug] [Thread-1 (]: Using postgres connection "model.energy.stg_features"
+[0m16:05:26.749965 [debug] [Thread-1 (]: On model.energy.stg_features: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "model.energy.stg_features"} */
+alter table "energy_db"."public"."stg_features__dbt_tmp" rename to "stg_features"
+[0m16:05:26.750746 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.000 seconds
+[0m16:05:26.760424 [debug] [Thread-1 (]: On model.energy.stg_features: COMMIT
+[0m16:05:26.760697 [debug] [Thread-1 (]: Using postgres connection "model.energy.stg_features"
+[0m16:05:26.760919 [debug] [Thread-1 (]: On model.energy.stg_features: COMMIT
+[0m16:05:26.762202 [debug] [Thread-1 (]: SQL status: COMMIT in 0.001 seconds
+[0m16:05:26.766054 [debug] [Thread-1 (]: Applying DROP to: "energy_db"."public"."stg_features__dbt_backup"
+[0m16:05:26.769766 [debug] [Thread-1 (]: Using postgres connection "model.energy.stg_features"
+[0m16:05:26.770056 [debug] [Thread-1 (]: On model.energy.stg_features: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "model.energy.stg_features"} */
+drop view if exists "energy_db"."public"."stg_features__dbt_backup" cascade
+[0m16:05:26.770884 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.001 seconds
+[0m16:05:26.772453 [debug] [Thread-1 (]: On model.energy.stg_features: Close
+[0m16:05:26.773706 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757992c7eed0>]}
+[0m16:05:26.774457 [info ] [Thread-1 (]: 1 of 2 OK created sql view model public.stg_features ........................... [[32mCREATE VIEW[0m in 0.07s]
+[0m16:05:26.774953 [debug] [Thread-1 (]: Finished running node model.energy.stg_features
+[0m16:05:26.775727 [debug] [Thread-3 (]: Began running node model.energy.daily_energy_weather
+[0m16:05:26.776139 [info ] [Thread-3 (]: 2 of 2 START sql table model public.daily_energy_weather ....................... [RUN]
+[0m16:05:26.776503 [debug] [Thread-3 (]: Acquiring new postgres connection 'model.energy.daily_energy_weather'
+[0m16:05:26.776711 [debug] [Thread-3 (]: Began compiling node model.energy.daily_energy_weather
+[0m16:05:26.778493 [debug] [Thread-3 (]: Writing injected SQL for node "model.energy.daily_energy_weather"
+[0m16:05:26.779055 [debug] [Thread-3 (]: Began executing node model.energy.daily_energy_weather
+[0m16:05:26.795653 [debug] [Thread-3 (]: Writing runtime sql for node "model.energy.daily_energy_weather"
+[0m16:05:26.796382 [debug] [Thread-3 (]: Using postgres connection "model.energy.daily_energy_weather"
+[0m16:05:26.796679 [debug] [Thread-3 (]: On model.energy.daily_energy_weather: BEGIN
+[0m16:05:26.796919 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m16:05:26.802561 [debug] [Thread-3 (]: SQL status: BEGIN in 0.006 seconds
+[0m16:05:26.802859 [debug] [Thread-3 (]: Using postgres connection "model.energy.daily_energy_weather"
+[0m16:05:26.803149 [debug] [Thread-3 (]: On model.energy.daily_energy_weather: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "model.energy.daily_energy_weather"} */
+
+  
+    
+
+  create  table "energy_db"."public"."daily_energy_weather__dbt_tmp"
+  
+  
+    as
+  
+  (
+    WITH hourly AS (
+    SELECT * FROM "energy_db"."public"."stg_features"
+),
+
+daily AS (
+    SELECT
+        DATE_TRUNC('day', date_heure)       AS jour,
+        AVG(temperature)                    AS temp_moy,
+        MIN(temperature)                    AS temp_min,
+        MAX(temperature)                    AS temp_max,
+        AVG(vent)                           AS vent_moy,
+        AVG(nuages)                         AS nuages_moy,
+        SUM(consommation_mw)                AS conso_totale_mwh,
+        AVG(consommation_mw)                AS conso_moy_mw,
+        MAX(consommation_mw)                AS conso_max_mw,
+        MIN(consommation_mw)                AS conso_min_mw,
+        MAX(est_weekend)                    AS est_weekend,
+        MAX(mois)                           AS mois,
+        LAG(SUM(consommation_mw), 7)
+            OVER (ORDER BY DATE_TRUNC('day', date_heure))
+                                            AS conso_semaine_precedente
+    FROM hourly
+    GROUP BY 1
+)
+
+SELECT * FROM daily
+ORDER BY jour
+  );
+  
+[0m16:05:26.822649 [debug] [Thread-3 (]: SQL status: SELECT 1037 in 0.019 seconds
+[0m16:05:26.824698 [debug] [Thread-3 (]: Using postgres connection "model.energy.daily_energy_weather"
+[0m16:05:26.824954 [debug] [Thread-3 (]: On model.energy.daily_energy_weather: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "model.energy.daily_energy_weather"} */
+alter table "energy_db"."public"."daily_energy_weather__dbt_tmp" rename to "daily_energy_weather"
+[0m16:05:26.825711 [debug] [Thread-3 (]: SQL status: ALTER TABLE in 0.000 seconds
+[0m16:05:26.829438 [debug] [Thread-3 (]: On model.energy.daily_energy_weather: COMMIT
+[0m16:05:26.829705 [debug] [Thread-3 (]: Using postgres connection "model.energy.daily_energy_weather"
+[0m16:05:26.829938 [debug] [Thread-3 (]: On model.energy.daily_energy_weather: COMMIT
+[0m16:05:26.831378 [debug] [Thread-3 (]: SQL status: COMMIT in 0.001 seconds
+[0m16:05:26.832766 [debug] [Thread-3 (]: Applying DROP to: "energy_db"."public"."daily_energy_weather__dbt_backup"
+[0m16:05:26.834943 [debug] [Thread-3 (]: Using postgres connection "model.energy.daily_energy_weather"
+[0m16:05:26.835224 [debug] [Thread-3 (]: On model.energy.daily_energy_weather: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "model.energy.daily_energy_weather"} */
+drop table if exists "energy_db"."public"."daily_energy_weather__dbt_backup" cascade
+[0m16:05:26.835799 [debug] [Thread-3 (]: SQL status: DROP TABLE in 0.000 seconds
+[0m16:05:26.836635 [debug] [Thread-3 (]: On model.energy.daily_energy_weather: Close
+[0m16:05:26.837032 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '83c5fd7f-b460-4024-b255-6412be6fa7ea', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x75798d9d1650>]}
+[0m16:05:26.837560 [info ] [Thread-3 (]: 2 of 2 OK created sql table model public.daily_energy_weather .................. [[32mSELECT 1037[0m in 0.06s]
+[0m16:05:26.837975 [debug] [Thread-3 (]: Finished running node model.energy.daily_energy_weather
+[0m16:05:26.839273 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:26.839517 [debug] [MainThread]: On master: BEGIN
+[0m16:05:26.839728 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m16:05:26.845213 [debug] [MainThread]: SQL status: BEGIN in 0.005 seconds
+[0m16:05:26.845482 [debug] [MainThread]: On master: COMMIT
+[0m16:05:26.845694 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:26.845885 [debug] [MainThread]: On master: COMMIT
+[0m16:05:26.846315 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:05:26.846583 [debug] [MainThread]: On master: Close
+[0m16:05:26.846960 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:05:26.847174 [debug] [MainThread]: Connection 'model.energy.stg_features' was properly closed.
+[0m16:05:26.847360 [debug] [MainThread]: Connection 'model.energy.daily_energy_weather' was properly closed.
+[0m16:05:26.847583 [info ] [MainThread]: 
+[0m16:05:26.847849 [info ] [MainThread]: Finished running 1 view model, 1 table model in 0 hours 0 minutes and 0.25 seconds (0.25s).
+[0m16:05:26.848369 [debug] [MainThread]: Command end result
+[0m16:05:26.870553 [info ] [MainThread]: 
+[0m16:05:26.871017 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m16:05:26.871299 [info ] [MainThread]: 
+[0m16:05:26.871552 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+[0m16:05:26.872345 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 0.9039243, "process_user_time": 1.56958, "process_kernel_time": 0.116265, "process_mem_max_rss": "124420", "process_out_blocks": "2608", "process_in_blocks": "0"}
+[0m16:05:26.872926 [debug] [MainThread]: Command `dbt run` succeeded at 16:05:26.872852 after 0.90 seconds
+[0m16:05:26.873323 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757993e46210>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757996c88e10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x757996dbf410>]}
+[0m16:05:26.873598 [debug] [MainThread]: Flushing usage events
+[0m16:05:56.931956 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c77c2ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c805a610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c7997e50>]}
+
+
+============================== 16:05:56.933922 | bf460a55-fbf1-41a4-9176-1d9773dc200f ==============================
+[0m16:05:56.933922 [info ] [MainThread]: Running with dbt=1.8.0
+[0m16:05:56.934433 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/mehdi/.dbt', 'fail_fast': 'False', 'debug': 'False', 'log_path': '/home/mehdi/energy-pipeline/dbt/logs', 'warn_error': 'None', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'invocation_command': 'dbt test', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m16:05:57.040509 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'bf460a55-fbf1-41a4-9176-1d9773dc200f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c7813390>]}
+[0m16:05:57.078075 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'bf460a55-fbf1-41a4-9176-1d9773dc200f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c9303910>]}
+[0m16:05:57.078669 [info ] [MainThread]: Registered adapter: postgres=1.8.0
+[0m16:05:57.123522 [debug] [MainThread]: checksum: dbb12d416fdb55e3665e4828703bbedf40c5c90ed7ca6ff39bbbfb29b12b0a92, vars: {}, profile: , target: , version: 1.8.0
+[0m16:05:57.191346 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m16:05:57.191676 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m16:05:57.216286 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'bf460a55-fbf1-41a4-9176-1d9773dc200f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c7840190>]}
+[0m16:05:57.277669 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'bf460a55-fbf1-41a4-9176-1d9773dc200f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c5deb790>]}
+[0m16:05:57.278063 [info ] [MainThread]: Found 2 models, 4 data tests, 428 macros
+[0m16:05:57.278344 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'bf460a55-fbf1-41a4-9176-1d9773dc200f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c654ef90>]}
+[0m16:05:57.280326 [info ] [MainThread]: 
+[0m16:05:57.280776 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m16:05:57.283830 [debug] [ThreadPool]: Acquiring new postgres connection 'list_energy_db_public'
+[0m16:05:57.310522 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:05:57.310868 [debug] [ThreadPool]: On list_energy_db_public: BEGIN
+[0m16:05:57.311104 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:05:57.318226 [debug] [ThreadPool]: SQL status: BEGIN in 0.007 seconds
+[0m16:05:57.318578 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:05:57.318830 [debug] [ThreadPool]: On list_energy_db_public: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "list_energy_db_public"} */
+select
+      'energy_db' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public'
+  
+[0m16:05:57.321183 [debug] [ThreadPool]: SQL status: SELECT 3 in 0.002 seconds
+[0m16:05:57.322384 [debug] [ThreadPool]: On list_energy_db_public: ROLLBACK
+[0m16:05:57.322926 [debug] [ThreadPool]: On list_energy_db_public: Close
+[0m16:05:57.326479 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:57.326740 [debug] [MainThread]: On master: BEGIN
+[0m16:05:57.326948 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m16:05:57.332308 [debug] [MainThread]: SQL status: BEGIN in 0.005 seconds
+[0m16:05:57.332602 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:57.332874 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v', 'm')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m16:05:57.335867 [debug] [MainThread]: SQL status: SELECT 1 in 0.003 seconds
+[0m16:05:57.336951 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'bf460a55-fbf1-41a4-9176-1d9773dc200f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c6cf8fd0>]}
+[0m16:05:57.337282 [debug] [MainThread]: On master: ROLLBACK
+[0m16:05:57.337778 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:57.338022 [debug] [MainThread]: On master: BEGIN
+[0m16:05:57.338598 [debug] [MainThread]: SQL status: BEGIN in 0.000 seconds
+[0m16:05:57.338978 [debug] [MainThread]: On master: COMMIT
+[0m16:05:57.339239 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:57.339511 [debug] [MainThread]: On master: COMMIT
+[0m16:05:57.339908 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:05:57.340157 [debug] [MainThread]: On master: Close
+[0m16:05:57.340522 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m16:05:57.340786 [info ] [MainThread]: 
+[0m16:05:57.343141 [debug] [Thread-1 (]: Began running node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:05:57.343643 [debug] [Thread-2 (]: Began running node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:05:57.344367 [debug] [Thread-3 (]: Began running node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:05:57.344776 [debug] [Thread-4 (]: Began running node test.energy.unique_stg_features_date_heure.e5a9731af1
+[0m16:05:57.344076 [info ] [Thread-1 (]: 1 of 4 START test not_null_stg_features_consommation_mw ........................ [RUN]
+[0m16:05:57.345252 [info ] [Thread-2 (]: 2 of 4 START test not_null_stg_features_date_heure ............................. [RUN]
+[0m16:05:57.345683 [info ] [Thread-3 (]: 3 of 4 START test not_null_stg_features_temperature ............................ [RUN]
+[0m16:05:57.346463 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_energy_db_public, now test.energy.not_null_stg_features_consommation_mw.28f4a2be92)
+[0m16:05:57.346107 [info ] [Thread-4 (]: 4 of 4 START test unique_stg_features_date_heure ............................... [RUN]
+[0m16:05:57.347032 [debug] [Thread-2 (]: Acquiring new postgres connection 'test.energy.not_null_stg_features_date_heure.fd375b0f74'
+[0m16:05:57.347445 [debug] [Thread-3 (]: Acquiring new postgres connection 'test.energy.not_null_stg_features_temperature.e697f83296'
+[0m16:05:57.347777 [debug] [Thread-1 (]: Began compiling node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:05:57.348177 [debug] [Thread-4 (]: Acquiring new postgres connection 'test.energy.unique_stg_features_date_heure.e5a9731af1'
+[0m16:05:57.348517 [debug] [Thread-2 (]: Began compiling node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:05:57.348804 [debug] [Thread-3 (]: Began compiling node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:05:57.360913 [debug] [Thread-1 (]: Writing injected SQL for node "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:05:57.361346 [debug] [Thread-4 (]: Began compiling node test.energy.unique_stg_features_date_heure.e5a9731af1
+[0m16:05:57.364283 [debug] [Thread-2 (]: Writing injected SQL for node "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:05:57.367235 [debug] [Thread-3 (]: Writing injected SQL for node "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:05:57.371897 [debug] [Thread-4 (]: Writing injected SQL for node "test.energy.unique_stg_features_date_heure.e5a9731af1"
+[0m16:05:57.372501 [debug] [Thread-1 (]: Began executing node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:05:57.373382 [debug] [Thread-3 (]: Began executing node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:05:57.373801 [debug] [Thread-2 (]: Began executing node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:05:57.374205 [debug] [Thread-4 (]: Began executing node test.energy.unique_stg_features_date_heure.e5a9731af1
+[0m16:05:57.385385 [debug] [Thread-1 (]: Writing runtime sql for node "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:05:57.386987 [debug] [Thread-3 (]: Writing runtime sql for node "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:05:57.388679 [debug] [Thread-2 (]: Writing runtime sql for node "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:05:57.390283 [debug] [Thread-4 (]: Writing runtime sql for node "test.energy.unique_stg_features_date_heure.e5a9731af1"
+[0m16:05:57.391544 [debug] [Thread-3 (]: Using postgres connection "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:05:57.392040 [debug] [Thread-1 (]: Using postgres connection "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:05:57.392448 [debug] [Thread-2 (]: Using postgres connection "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:05:57.392910 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: BEGIN
+[0m16:05:57.393328 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: BEGIN
+[0m16:05:57.393661 [debug] [Thread-4 (]: Using postgres connection "test.energy.unique_stg_features_date_heure.e5a9731af1"
+[0m16:05:57.393986 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: BEGIN
+[0m16:05:57.394277 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m16:05:57.394579 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m16:05:57.394858 [debug] [Thread-4 (]: On test.energy.unique_stg_features_date_heure.e5a9731af1: BEGIN
+[0m16:05:57.395140 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m16:05:57.395815 [debug] [Thread-4 (]: Opening a new connection, currently in state init
+[0m16:05:57.402670 [debug] [Thread-3 (]: SQL status: BEGIN in 0.008 seconds
+[0m16:05:57.403143 [debug] [Thread-3 (]: Using postgres connection "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:05:57.403707 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "test.energy.not_null_stg_features_temperature.e697f83296"} */
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+
+
+select temperature
+from "energy_db"."public"."stg_features"
+where temperature is null
+
+
+
+      
+    ) dbt_internal_test
+[0m16:05:57.404054 [debug] [Thread-1 (]: SQL status: BEGIN in 0.009 seconds
+[0m16:05:57.404408 [debug] [Thread-4 (]: SQL status: BEGIN in 0.009 seconds
+[0m16:05:57.404722 [debug] [Thread-2 (]: SQL status: BEGIN in 0.010 seconds
+[0m16:05:57.405212 [debug] [Thread-1 (]: Using postgres connection "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:05:57.405611 [debug] [Thread-4 (]: Using postgres connection "test.energy.unique_stg_features_date_heure.e5a9731af1"
+[0m16:05:57.405963 [debug] [Thread-2 (]: Using postgres connection "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:05:57.406309 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"} */
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+
+
+select consommation_mw
+from "energy_db"."public"."stg_features"
+where consommation_mw is null
+
+
+
+      
+    ) dbt_internal_test
+[0m16:05:57.406660 [debug] [Thread-4 (]: On test.energy.unique_stg_features_date_heure.e5a9731af1: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "test.energy.unique_stg_features_date_heure.e5a9731af1"} */
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+select
+    date_heure as unique_field,
+    count(*) as n_records
+
+from "energy_db"."public"."stg_features"
+where date_heure is not null
+group by date_heure
+having count(*) > 1
+
+
+
+      
+    ) dbt_internal_test
+[0m16:05:57.407027 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "test.energy.not_null_stg_features_date_heure.fd375b0f74"} */
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+
+
+select date_heure
+from "energy_db"."public"."stg_features"
+where date_heure is null
+
+
+
+      
+    ) dbt_internal_test
+[0m16:05:57.410371 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.005 seconds
+[0m16:05:57.410746 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.003 seconds
+[0m16:05:57.414290 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: ROLLBACK
+[0m16:05:57.414687 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.007 seconds
+[0m16:05:57.415783 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: ROLLBACK
+[0m16:05:57.417059 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: ROLLBACK
+[0m16:05:57.417440 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: Close
+[0m16:05:57.418397 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: Close
+[0m16:05:57.418128 [info ] [Thread-3 (]: 3 of 4 PASS not_null_stg_features_temperature .................................. [[32mPASS[0m in 0.07s]
+[0m16:05:57.418927 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: Close
+[0m16:05:57.419424 [info ] [Thread-1 (]: 1 of 4 PASS not_null_stg_features_consommation_mw .............................. [[32mPASS[0m in 0.07s]
+[0m16:05:57.419946 [debug] [Thread-3 (]: Finished running node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:05:57.420598 [debug] [Thread-1 (]: Finished running node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:05:57.420995 [info ] [Thread-2 (]: 2 of 4 PASS not_null_stg_features_date_heure ................................... [[32mPASS[0m in 0.07s]
+[0m16:05:57.421915 [debug] [Thread-2 (]: Finished running node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:05:57.423426 [debug] [Thread-4 (]: SQL status: SELECT 1 in 0.016 seconds
+[0m16:05:57.424398 [debug] [Thread-4 (]: On test.energy.unique_stg_features_date_heure.e5a9731af1: ROLLBACK
+[0m16:05:57.424869 [debug] [Thread-4 (]: On test.energy.unique_stg_features_date_heure.e5a9731af1: Close
+[0m16:05:57.425401 [error] [Thread-4 (]: 4 of 4 FAIL 2 unique_stg_features_date_heure ................................... [[31mFAIL 2[0m in 0.08s]
+[0m16:05:57.425932 [debug] [Thread-4 (]: Finished running node test.energy.unique_stg_features_date_heure.e5a9731af1
+[0m16:05:57.427878 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:57.428203 [debug] [MainThread]: On master: BEGIN
+[0m16:05:57.428443 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m16:05:57.434822 [debug] [MainThread]: SQL status: BEGIN in 0.006 seconds
+[0m16:05:57.435275 [debug] [MainThread]: On master: COMMIT
+[0m16:05:57.435541 [debug] [MainThread]: Using postgres connection "master"
+[0m16:05:57.435780 [debug] [MainThread]: On master: COMMIT
+[0m16:05:57.436518 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:05:57.436890 [debug] [MainThread]: On master: Close
+[0m16:05:57.437335 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:05:57.437652 [debug] [MainThread]: Connection 'test.energy.not_null_stg_features_consommation_mw.28f4a2be92' was properly closed.
+[0m16:05:57.437867 [debug] [MainThread]: Connection 'test.energy.not_null_stg_features_date_heure.fd375b0f74' was properly closed.
+[0m16:05:57.438059 [debug] [MainThread]: Connection 'test.energy.not_null_stg_features_temperature.e697f83296' was properly closed.
+[0m16:05:57.438281 [debug] [MainThread]: Connection 'test.energy.unique_stg_features_date_heure.e5a9731af1' was properly closed.
+[0m16:05:57.438684 [info ] [MainThread]: 
+[0m16:05:57.439008 [info ] [MainThread]: Finished running 4 data tests in 0 hours 0 minutes and 0.16 seconds (0.16s).
+[0m16:05:57.439719 [debug] [MainThread]: Command end result
+[0m16:05:57.459332 [info ] [MainThread]: 
+[0m16:05:57.459771 [info ] [MainThread]: [31mCompleted with 1 error and 0 warnings:[0m
+[0m16:05:57.460048 [info ] [MainThread]: 
+[0m16:05:57.460370 [error] [MainThread]: [31mFailure in test unique_stg_features_date_heure (models/staging/stg_features.yml)[0m
+[0m16:05:57.460690 [error] [MainThread]:   Got 2 results, configured to fail if != 0
+[0m16:05:57.461054 [info ] [MainThread]: 
+[0m16:05:57.461373 [info ] [MainThread]:   compiled code at target/compiled/energy/models/staging/stg_features.yml/unique_stg_features_date_heure.sql
+[0m16:05:57.461673 [info ] [MainThread]: 
+[0m16:05:57.461930 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=1 SKIP=0 TOTAL=4
+[0m16:05:57.462563 [debug] [MainThread]: Resource report: {"command_name": "test", "command_wall_clock_time": 0.5634309, "process_user_time": 1.271093, "process_kernel_time": 0.123632, "process_mem_max_rss": "121316", "process_out_blocks": "1808", "command_success": false, "process_in_blocks": "0"}
+[0m16:05:57.463100 [debug] [MainThread]: Command `dbt test` failed at 16:05:57.463009 after 0.56 seconds
+[0m16:05:57.463409 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6c88e61d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6cb7bb3d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ba6cb7bab50>]}
+[0m16:05:57.463701 [debug] [MainThread]: Flushing usage events
+[0m16:08:13.949121 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c5546b90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c5546ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c5546790>]}
+
+
+============================== 16:08:13.951021 | c215fbd5-d2a4-43d2-a729-2a126a3f8cd2 ==============================
+[0m16:08:13.951021 [info ] [MainThread]: Running with dbt=1.8.0
+[0m16:08:13.951476 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/home/mehdi/energy-pipeline/dbt/logs', 'debug': 'False', 'profiles_dir': '/home/mehdi/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt test', 'send_anonymous_usage_stats': 'True'}
+[0m16:08:14.066293 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'c215fbd5-d2a4-43d2-a729-2a126a3f8cd2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c50a30d0>]}
+[0m16:08:14.103339 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'c215fbd5-d2a4-43d2-a729-2a126a3f8cd2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c7027ad0>]}
+[0m16:08:14.103903 [info ] [MainThread]: Registered adapter: postgres=1.8.0
+[0m16:08:14.148303 [debug] [MainThread]: checksum: dbb12d416fdb55e3665e4828703bbedf40c5c90ed7ca6ff39bbbfb29b12b0a92, vars: {}, profile: , target: , version: 1.8.0
+[0m16:08:14.214133 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m16:08:14.214626 [debug] [MainThread]: Partial parsing: updated file: energy://models/staging/stg_features.yml
+[0m16:08:14.466442 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'c215fbd5-d2a4-43d2-a729-2a126a3f8cd2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c4181d90>]}
+[0m16:08:14.532198 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'c215fbd5-d2a4-43d2-a729-2a126a3f8cd2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c3151390>]}
+[0m16:08:14.532630 [info ] [MainThread]: Found 2 models, 3 data tests, 428 macros
+[0m16:08:14.532959 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'c215fbd5-d2a4-43d2-a729-2a126a3f8cd2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c3d4a4d0>]}
+[0m16:08:14.534602 [info ] [MainThread]: 
+[0m16:08:14.535099 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m16:08:14.538355 [debug] [ThreadPool]: Acquiring new postgres connection 'list_energy_db_public'
+[0m16:08:14.597648 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:08:14.597961 [debug] [ThreadPool]: On list_energy_db_public: BEGIN
+[0m16:08:14.598179 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:08:14.605572 [debug] [ThreadPool]: SQL status: BEGIN in 0.007 seconds
+[0m16:08:14.605853 [debug] [ThreadPool]: Using postgres connection "list_energy_db_public"
+[0m16:08:14.606328 [debug] [ThreadPool]: On list_energy_db_public: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "list_energy_db_public"} */
+select
+      'energy_db' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public'
+    union all
+    select
+      'energy_db' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public'
+  
+[0m16:08:14.608630 [debug] [ThreadPool]: SQL status: SELECT 3 in 0.002 seconds
+[0m16:08:14.609564 [debug] [ThreadPool]: On list_energy_db_public: ROLLBACK
+[0m16:08:14.610037 [debug] [ThreadPool]: On list_energy_db_public: Close
+[0m16:08:14.613565 [debug] [MainThread]: Using postgres connection "master"
+[0m16:08:14.613827 [debug] [MainThread]: On master: BEGIN
+[0m16:08:14.614041 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m16:08:14.619352 [debug] [MainThread]: SQL status: BEGIN in 0.005 seconds
+[0m16:08:14.619639 [debug] [MainThread]: Using postgres connection "master"
+[0m16:08:14.619929 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v', 'm')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m16:08:14.622623 [debug] [MainThread]: SQL status: SELECT 1 in 0.002 seconds
+[0m16:08:14.623638 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'c215fbd5-d2a4-43d2-a729-2a126a3f8cd2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c399c850>]}
+[0m16:08:14.623943 [debug] [MainThread]: On master: ROLLBACK
+[0m16:08:14.624351 [debug] [MainThread]: Using postgres connection "master"
+[0m16:08:14.624590 [debug] [MainThread]: On master: BEGIN
+[0m16:08:14.625128 [debug] [MainThread]: SQL status: BEGIN in 0.000 seconds
+[0m16:08:14.625470 [debug] [MainThread]: On master: COMMIT
+[0m16:08:14.625676 [debug] [MainThread]: Using postgres connection "master"
+[0m16:08:14.625864 [debug] [MainThread]: On master: COMMIT
+[0m16:08:14.626227 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:08:14.626474 [debug] [MainThread]: On master: Close
+[0m16:08:14.626867 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m16:08:14.627275 [info ] [MainThread]: 
+[0m16:08:14.629829 [debug] [Thread-1 (]: Began running node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:08:14.630734 [debug] [Thread-2 (]: Began running node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:08:14.631085 [debug] [Thread-3 (]: Began running node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:08:14.631409 [info ] [Thread-1 (]: 1 of 3 START test not_null_stg_features_consommation_mw ........................ [RUN]
+[0m16:08:14.631722 [info ] [Thread-2 (]: 2 of 3 START test not_null_stg_features_date_heure ............................. [RUN]
+[0m16:08:14.632224 [info ] [Thread-3 (]: 3 of 3 START test not_null_stg_features_temperature ............................ [RUN]
+[0m16:08:14.632639 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_energy_db_public, now test.energy.not_null_stg_features_consommation_mw.28f4a2be92)
+[0m16:08:14.633046 [debug] [Thread-2 (]: Acquiring new postgres connection 'test.energy.not_null_stg_features_date_heure.fd375b0f74'
+[0m16:08:14.633468 [debug] [Thread-3 (]: Acquiring new postgres connection 'test.energy.not_null_stg_features_temperature.e697f83296'
+[0m16:08:14.633774 [debug] [Thread-1 (]: Began compiling node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:08:14.634085 [debug] [Thread-2 (]: Began compiling node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:08:14.634393 [debug] [Thread-3 (]: Began compiling node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:08:14.645761 [debug] [Thread-1 (]: Writing injected SQL for node "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:08:14.648507 [debug] [Thread-2 (]: Writing injected SQL for node "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:08:14.651717 [debug] [Thread-3 (]: Writing injected SQL for node "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:08:14.652527 [debug] [Thread-1 (]: Began executing node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:08:14.652922 [debug] [Thread-2 (]: Began executing node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:08:14.663012 [debug] [Thread-1 (]: Writing runtime sql for node "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:08:14.663473 [debug] [Thread-3 (]: Began executing node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:08:14.664984 [debug] [Thread-2 (]: Writing runtime sql for node "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:08:14.666757 [debug] [Thread-3 (]: Writing runtime sql for node "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:08:14.667213 [debug] [Thread-1 (]: Using postgres connection "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:08:14.667691 [debug] [Thread-2 (]: Using postgres connection "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:08:14.668400 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: BEGIN
+[0m16:08:14.668753 [debug] [Thread-3 (]: Using postgres connection "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:08:14.669090 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: BEGIN
+[0m16:08:14.670207 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m16:08:14.669896 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: BEGIN
+[0m16:08:14.669507 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m16:08:14.670743 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m16:08:14.677554 [debug] [Thread-2 (]: SQL status: BEGIN in 0.007 seconds
+[0m16:08:14.678099 [debug] [Thread-1 (]: SQL status: BEGIN in 0.009 seconds
+[0m16:08:14.678408 [debug] [Thread-2 (]: Using postgres connection "test.energy.not_null_stg_features_date_heure.fd375b0f74"
+[0m16:08:14.678708 [debug] [Thread-3 (]: SQL status: BEGIN in 0.008 seconds
+[0m16:08:14.679051 [debug] [Thread-1 (]: Using postgres connection "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"
+[0m16:08:14.679399 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "test.energy.not_null_stg_features_date_heure.fd375b0f74"} */
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+
+
+select date_heure
+from "energy_db"."public"."stg_features"
+where date_heure is null
+
+
+
+      
+    ) dbt_internal_test
+[0m16:08:14.679763 [debug] [Thread-3 (]: Using postgres connection "test.energy.not_null_stg_features_temperature.e697f83296"
+[0m16:08:14.680100 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "test.energy.not_null_stg_features_consommation_mw.28f4a2be92"} */
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+
+
+select consommation_mw
+from "energy_db"."public"."stg_features"
+where consommation_mw is null
+
+
+
+      
+    ) dbt_internal_test
+[0m16:08:14.680541 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "energy", "target_name": "dev", "node_id": "test.energy.not_null_stg_features_temperature.e697f83296"} */
+select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+    
+
+
+
+select temperature
+from "energy_db"."public"."stg_features"
+where temperature is null
+
+
+
+      
+    ) dbt_internal_test
+[0m16:08:14.683904 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.003 seconds
+[0m16:08:14.684220 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.003 seconds
+[0m16:08:14.687345 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: ROLLBACK
+[0m16:08:14.687713 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.007 seconds
+[0m16:08:14.688715 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: ROLLBACK
+[0m16:08:14.689903 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: ROLLBACK
+[0m16:08:14.690313 [debug] [Thread-1 (]: On test.energy.not_null_stg_features_consommation_mw.28f4a2be92: Close
+[0m16:08:14.690596 [debug] [Thread-3 (]: On test.energy.not_null_stg_features_temperature.e697f83296: Close
+[0m16:08:14.691116 [debug] [Thread-2 (]: On test.energy.not_null_stg_features_date_heure.fd375b0f74: Close
+[0m16:08:14.691586 [info ] [Thread-1 (]: 1 of 3 PASS not_null_stg_features_consommation_mw .............................. [[32mPASS[0m in 0.06s]
+[0m16:08:14.692065 [info ] [Thread-3 (]: 3 of 3 PASS not_null_stg_features_temperature .................................. [[32mPASS[0m in 0.06s]
+[0m16:08:14.692926 [debug] [Thread-1 (]: Finished running node test.energy.not_null_stg_features_consommation_mw.28f4a2be92
+[0m16:08:14.692555 [info ] [Thread-2 (]: 2 of 3 PASS not_null_stg_features_date_heure ................................... [[32mPASS[0m in 0.06s]
+[0m16:08:14.693546 [debug] [Thread-3 (]: Finished running node test.energy.not_null_stg_features_temperature.e697f83296
+[0m16:08:14.694144 [debug] [Thread-2 (]: Finished running node test.energy.not_null_stg_features_date_heure.fd375b0f74
+[0m16:08:14.695620 [debug] [MainThread]: Using postgres connection "master"
+[0m16:08:14.695875 [debug] [MainThread]: On master: BEGIN
+[0m16:08:14.696083 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m16:08:14.701662 [debug] [MainThread]: SQL status: BEGIN in 0.006 seconds
+[0m16:08:14.702001 [debug] [MainThread]: On master: COMMIT
+[0m16:08:14.702259 [debug] [MainThread]: Using postgres connection "master"
+[0m16:08:14.702472 [debug] [MainThread]: On master: COMMIT
+[0m16:08:14.702907 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m16:08:14.703180 [debug] [MainThread]: On master: Close
+[0m16:08:14.703522 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:08:14.703749 [debug] [MainThread]: Connection 'test.energy.not_null_stg_features_consommation_mw.28f4a2be92' was properly closed.
+[0m16:08:14.703942 [debug] [MainThread]: Connection 'test.energy.not_null_stg_features_date_heure.fd375b0f74' was properly closed.
+[0m16:08:14.704121 [debug] [MainThread]: Connection 'test.energy.not_null_stg_features_temperature.e697f83296' was properly closed.
+[0m16:08:14.704366 [info ] [MainThread]: 
+[0m16:08:14.704702 [info ] [MainThread]: Finished running 3 data tests in 0 hours 0 minutes and 0.17 seconds (0.17s).
+[0m16:08:14.706021 [debug] [MainThread]: Command end result
+[0m16:08:14.726050 [info ] [MainThread]: 
+[0m16:08:14.726472 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m16:08:14.726734 [info ] [MainThread]: 
+[0m16:08:14.726981 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
+[0m16:08:14.727670 [debug] [MainThread]: Resource report: {"command_name": "test", "command_success": true, "command_wall_clock_time": 0.8113632, "process_user_time": 1.487691, "process_kernel_time": 0.139108, "process_mem_max_rss": "124888", "process_out_blocks": "2592", "process_in_blocks": "0"}
+[0m16:08:14.728188 [debug] [MainThread]: Command `dbt test` succeeded at 16:08:14.728099 after 0.81 seconds
+[0m16:08:14.728516 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c55a0550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c9484d50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb6c95bab50>]}
+[0m16:08:14.728798 [debug] [MainThread]: Flushing usage events

@@ -67,3 +67,15 @@ if __name__ == "__main__":
     logger.info("Fichiers dans le bucket 'raw' :")
     for f in list_files("raw"):
         print(f"  - {f}")
+
+def download_file(bucket: str, key: str, local_path: str) -> bool:
+    """Télécharge un fichier depuis MinIO vers le disque local."""
+    client = get_minio_client()
+    Path(local_path).parent.mkdir(parents=True, exist_ok=True)
+    try:
+        client.download_file(bucket, key, local_path)
+        logger.success(f"Download réussi : s3://{bucket}/{key} → {local_path}")
+        return True
+    except ClientError as e:
+        logger.error(f"Erreur download : {e}")
+        return False

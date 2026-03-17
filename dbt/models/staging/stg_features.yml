@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_features
+    description: "Données météo et consommation électrique nettoyées"
+    columns:
+      - name: date_heure
+        description: "Horodatage horaire (doublons possibles aux changements d'heure)"
+        data_tests:
+          - not_null
+      - name: consommation_mw
+        description: "Consommation électrique en MW"
+        data_tests:
+          - not_null
+      - name: temperature
+        description: "Température en °C"
+        data_tests:
+          - not_null

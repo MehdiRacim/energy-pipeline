@@ -5,3 +5,4 @@ __pycache__/
 *.parquet
 ml/models/*.pkl
 .DS_Store
+docker/jars/

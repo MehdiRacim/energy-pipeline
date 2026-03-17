@@ -10,9 +10,10 @@ load_dotenv()
 
 def get_minio_client():
     """Crée et retourne un client MinIO."""
+    endpoint = os.getenv("MINIO_ENDPOINT", "http://localhost:9000")
     client = boto3.client(
         "s3",
-        endpoint_url=os.getenv("MINIO_ENDPOINT", "http://localhost:9000"),
+        endpoint_url=endpoint,
         aws_access_key_id=os.getenv("MINIO_ROOT_USER", "minioadmin"),
         aws_secret_access_key=os.getenv("MINIO_ROOT_PASSWORD", "minioadmin123"),
         config=Config(signature_version="s3v4"),

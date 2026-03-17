@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Predictor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 700px;
+      margin-bottom: 24px;
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .field .unit {
+      font-size: 0.75rem;
+      color: #475569;
+    }
+
+    .field input, .field select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #e2e8f0;
+      font-size: 1rem;
+      transition: border-color .2s;
+      width: 100%;
+    }
+
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+
+    .slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider-wrap input[type=range] {
+      flex: 1;
+      accent-color: #38bdf8;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+
+    .slider-val {
+      min-width: 48px;
+      text-align: right;
+      font-weight: 600;
+      color: #38bdf8;
+      font-size: 0.95rem;
+    }
+
+    .toggle-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all .2s;
+      font-weight: 500;
+    }
+
+    .toggle-btn.active {
+      background: #1d4ed8;
+      border-color: #3b82f6;
+      color: #fff;
+    }
+
+    .btn-predict {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+      margin-top: 8px;
+    }
+
+    .btn-predict:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-predict:active { transform: translateY(0); }
+    .btn-predict:disabled { opacity: .5; cursor: not-allowed; }
+
+    .result-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 700px;
+      display: none;
+    }
+
+    .result-card.visible { display: block; }
+
+    .result-main {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .result-date {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+
+    .result-unit {
+      font-size: 1.2rem;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .stat {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .confidence {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: #0f172a;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .confidence-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    .error-msg {
+      background: #450a0a;
+      border: 1px solid #7f1d1d;
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: #fca5a5;
+      font-size: 0.9rem;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    .loader {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: #94a3b8;
+    }
+
+    .loader.visible { display: block; }
+
+    @media (max-width: 500px) {
+      .grid { grid-template-columns: 1fr; }
+      .result-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⚡ Energy Predictor</h1>
+  <p>Prédiction de la consommation électrique française J+1</p>
+</div>
+
+<div class="card">
+  <h2>Météo prévue demain</h2>
+  <div class="grid">
+
+    <div class="field">
+      <label>Température moyenne <span class="unit">°C</span></label>
+      <div class="slider-wrap">
+        <input type="range" id="temp_moy" min="-10" max="40" value="10"
+               oninput="updateSlider('temp_moy', 'v_temp_moy', '°C')">
+        <span class="slider-val" id="v_temp_moy">10°C</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Température min <span class="unit">°C</span></label>
+      <div class="slider-wrap">
+        <input type="range" id="temp_min" min="-15" max="35" value="5"
+               oninput="updateSlider('temp_min', 'v_temp_min', '°C')">
+        <span class="slider-val" id="v_temp_min">5°C</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Température max <span class="unit">°C</span></label>
+      <div class="slider-wrap">
+        <input type="range" id="temp_max" min="-5" max="45" value="15"
+               oninput="updateSlider('temp_max', 'v_temp_max', '°C')">
+        <span class="slider-val" id="v_temp_max">15°C</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Vitesse du vent <span class="unit">km/h</span></label>
+      <div class="slider-wrap">
+        <input type="range" id="vent_moy" min="0" max="100" value="20"
+               oninput="updateSlider('vent_moy', 'v_vent_moy', ' km/h')">
+        <span class="slider-val" id="v_vent_moy">20 km/h</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Couverture nuageuse <span class="unit">%</span></label>
+      <div class="slider-wrap">
+        <input type="range" id="nuages_moy" min="0" max="100" value="50"
+               oninput="updateSlider('nuages_moy', 'v_nuages_moy', '%')">
+        <span class="slider-val" id="v_nuages_moy">50%</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Conso il y a 7 jours <span class="unit">MWh</span></label>
+      <div class="slider-wrap">
+        <input type="range" id="conso_prec" min="500000" max="1400000"
+               step="10000" value="950000"
+               oninput="updateSlider('conso_prec', 'v_conso_prec', ' MWh', true)">
+        <span class="slider-val" id="v_conso_prec">950 000 MWh</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Mois</label>
+      <select id="mois">
+        <option value="1">Janvier</option>
+        <option value="2">Février</option>
+        <option value="3" selected>Mars</option>
+        <option value="4">Avril</option>
+        <option value="5">Mai</option>
+        <option value="6">Juin</option>
+        <option value="7">Juillet</option>
+        <option value="8">Août</option>
+        <option value="9">Septembre</option>
+        <option value="10">Octobre</option>
+        <option value="11">Novembre</option>
+        <option value="12">Décembre</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Type de jour</label>
+      <div class="toggle-row">
+        <button class="toggle-btn active" id="btn-semaine"
+                onclick="setWeekend(0)">Semaine</button>
+        <button class="toggle-btn" id="btn-weekend"
+                onclick="setWeekend(1)">Weekend</button>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="btn-predict" onclick="predict()">
+    Prédire la consommation
+  </button>
+</div>
+
+<div class="loader" id="loader">Calcul en cours...</div>
+<div class="error-msg" id="error"></div>
+
+<div class="result-card" id="result">
+  <div class="result-main">
+    <div class="result-date" id="res-date"></div>
+    <div class="result-value" id="res-gwh"></div>
+    <div class="result-unit">GWh prédits</div>
+  </div>
+  <div class="result-stats">
+    <div class="stat">
+      <div class="stat-label">En MWh</div>
+      <div class="stat-value" id="res-mwh"></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Température</div>
+      <div class="stat-value" id="res-temp"></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Type de jour</div>
+      <div class="stat-value" id="res-jour"></div>
+    </div>
+  </div>
+  <div class="confidence">
+    <span class="confidence-dot"></span>
+    Marge d'erreur du modèle : ± <span id="res-mae"></span> GWh
+  </div>
+</div>
+
+<script>
+  let estWeekend = 0;
+
+  function updateSlider(id, valId, suffix, format = false) {
+    const val = document.getElementById(id).value;
+    document.getElementById(valId).textContent = format
+      ? Number(val).toLocaleString('fr-FR') + suffix
+      : val + suffix;
+  }
+
+  function setWeekend(val) {
+    estWeekend = val;
+    document.getElementById('btn-semaine').classList.toggle('active', val === 0);
+    document.getElementById('btn-weekend').classList.toggle('active', val === 1);
+  }
+
+  async function predict() {
+    const btn = document.querySelector('.btn-predict');
+    const loader = document.getElementById('loader');
+    const errorEl = document.getElementById('error');
+    const resultEl = document.getElementById('result');
+
+    btn.disabled = true;
+    loader.classList.add('visible');
+    errorEl.classList.remove('visible');
+    resultEl.classList.remove('visible');
+
+    const params = new URLSearchParams({
+      temp_moy: document.getElementById('temp_moy').value,
+      temp_min: document.getElementById('temp_min').value,
+      temp_max: document.getElementById('temp_max').value,
+      vent_moy: document.getElementById('vent_moy').value,
+      nuages_moy: document.getElementById('nuages_moy').value,
+      est_weekend: estWeekend,
+      mois: document.getElementById('mois').value,
+      conso_semaine_precedente: document.getElementById('conso_prec').value
+    });
+
+    try {
+      const res = await fetch(`http://localhost:8000/predict?${params}`);
+      if (!res.ok) throw new Error(`Erreur ${res.status}`);
+      const data = await res.json();
+
+      document.getElementById('res-date').textContent =
+        `Prédiction pour le ${data.date_prediction}`;
+      document.getElementById('res-gwh').textContent =
+        data.prediction_gwh.toLocaleString('fr-FR');
+      document.getElementById('res-mwh').textContent =
+        data.prediction_mwh.toLocaleString('fr-FR');
+      document.getElementById('res-temp').textContent =
+        document.getElementById('temp_moy').value + '°C';
+      document.getElementById('res-jour').textContent =
+        estWeekend ? 'Weekend' : 'Semaine';
+      document.getElementById('res-mae').textContent =
+        (data.modele_mae_mwh / 1000).toFixed(0);
+
+      resultEl.classList.add('visible');
+    } catch (e) {
+      errorEl.textContent = "Impossible de contacter l'API. Vérifie que uvicorn tourne sur le port 8000.";
+      errorEl.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      loader.classList.remove('visible');
+    }
+  }
+</script>
+</body>
+</html>

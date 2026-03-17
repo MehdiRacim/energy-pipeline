@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import joblib
 import numpy as np
@@ -11,6 +12,26 @@ app = FastAPI(
     title="Energy Prediction API",
     description="Prédit la consommation électrique française J+1",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app = FastAPI(
+    title="Energy Prediction API",
+    description="Prédit la consommation électrique française J+1",
+    version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 MODEL_PATH = Path("ml/models/energy_predictor.pkl")

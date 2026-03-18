@@ -67,7 +67,7 @@ def load_features_to_postgres():
             pg_type = "TEXT"
         col_defs.append(f'"{col}" {pg_type}')
 
-    cur.execute("DROP TABLE IF EXISTS raw_features")
+    cur.execute("DROP TABLE IF EXISTS raw_features CASCADE")
     cur.execute(f"CREATE TABLE raw_features ({', '.join(col_defs)})")
     logger.info("Table raw_features créée")
 

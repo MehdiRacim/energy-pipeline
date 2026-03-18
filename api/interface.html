@@ -159,6 +159,39 @@
     .btn-predict:active { transform: translateY(0); }
     .btn-predict:disabled { opacity: .5; cursor: not-allowed; }
 
+    .btn-auto {
+      width: 100%;
+      padding: 16px;
+      background: #1e293b;
+      border: 1px solid #38bdf8;
+      border-radius: 12px;
+      color: #38bdf8;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      margin-top: 12px;
+    }
+
+    .btn-auto:hover { background: #0f3460; }
+    .btn-auto:disabled { opacity: .5; cursor: not-allowed; }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 8px;
+      color: #475569;
+      font-size: 0.8rem;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #334155;
+    }
+
     .result-card {
       background: #1e293b;
       border: 1px solid #334155;
@@ -225,6 +258,39 @@
       color: #e2e8f0;
     }
 
+    .meteo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .meteo-item {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .meteo-icon {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .meteo-label {
+      font-size: 0.7rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .meteo-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-top: 2px;
+    }
+
     .confidence {
       margin-top: 20px;
       padding: 14px 18px;
@@ -254,6 +320,8 @@
       font-size: 0.9rem;
       margin-top: 16px;
       display: none;
+      max-width: 700px;
+      width: 100%;
     }
 
     .error-msg.visible { display: block; }
@@ -267,9 +335,22 @@
 
     .loader.visible { display: block; }
 
+    .meteo-section {
+      margin-top: 20px;
+    }
+
+    .meteo-section h3 {
+      font-size: 0.8rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 12px;
+    }
+
     @media (max-width: 500px) {
       .grid { grid-template-columns: 1fr; }
       .result-stats { grid-template-columns: 1fr 1fr; }
+      .meteo-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -281,7 +362,17 @@
 </div>
 
 <div class="card">
-  <h2>Météo prévue demain</h2>
+  <h2>Prédiction automatique</h2>
+  <p style="color:#64748b;font-size:0.9rem;margin-bottom:16px">
+    Récupère automatiquement les prévisions météo de demain et prédit la consommation.
+  </p>
+  <button class="btn-auto" id="btn-auto" onclick="predictTomorrow()">
+    ⚡ Prédire demain automatiquement
+  </button>
+
+  <div class="divider">ou entrer la météo manuellement</div>
+
+  <h2 style="margin-top:8px">Météo prévue demain</h2>
   <div class="grid">
 
     <div class="field">
@@ -383,6 +474,7 @@
     <div class="result-value" id="res-gwh"></div>
     <div class="result-unit">GWh prédits</div>
   </div>
+
   <div class="result-stats">
     <div class="stat">
       <div class="stat-label">En MWh</div>
@@ -397,6 +489,43 @@
       <div class="stat-value" id="res-jour"></div>
     </div>
   </div>
+
+  <div class="meteo-section" id="meteo-section" style="display:none">
+    <h3>Météo prévue récupérée automatiquement</h3>
+    <div class="meteo-grid">
+      <div class="meteo-item">
+        <div class="meteo-icon">🌡️</div>
+        <div class="meteo-label">Temp moy</div>
+        <div class="meteo-value" id="m-temp"></div>
+      </div>
+      <div class="meteo-item">
+        <div class="meteo-icon">🌬️</div>
+        <div class="meteo-label">Vent</div>
+        <div class="meteo-value" id="m-vent"></div>
+      </div>
+      <div class="meteo-item">
+        <div class="meteo-icon">☁️</div>
+        <div class="meteo-label">Nuages</div>
+        <div class="meteo-value" id="m-nuages"></div>
+      </div>
+      <div class="meteo-item">
+        <div class="meteo-icon">🌡️</div>
+        <div class="meteo-label">Temp min</div>
+        <div class="meteo-value" id="m-tmin"></div>
+      </div>
+      <div class="meteo-item">
+        <div class="meteo-icon">🌡️</div>
+        <div class="meteo-label">Temp max</div>
+        <div class="meteo-value" id="m-tmax"></div>
+      </div>
+      <div class="meteo-item">
+        <div class="meteo-icon">📅</div>
+        <div class="meteo-label">Type jour</div>
+        <div class="meteo-value" id="m-jour"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="confidence">
     <span class="confidence-dot"></span>
     Marge d'erreur du modèle : ± <span id="res-mae"></span> GWh
@@ -419,16 +548,45 @@
     document.getElementById('btn-weekend').classList.toggle('active', val === 1);
   }
 
+  function showResult(data, meteo = null) {
+    document.getElementById('res-date').textContent =
+      `Prédiction pour le ${data.date_prediction || data.date_prediction}`;
+    document.getElementById('res-gwh').textContent =
+      data.prediction_gwh.toLocaleString('fr-FR');
+    document.getElementById('res-mwh').textContent =
+      data.prediction_mwh.toLocaleString('fr-FR');
+    document.getElementById('res-temp').textContent =
+      meteo ? meteo.temperature_moy + '°C' : document.getElementById('temp_moy').value + '°C';
+    document.getElementById('res-jour').textContent =
+      (meteo ? meteo.est_weekend : estWeekend) ? 'Weekend' : 'Semaine';
+    document.getElementById('res-mae').textContent =
+      (data.modele_mae_mwh / 1000).toFixed(0);
+
+    const meteoSection = document.getElementById('meteo-section');
+    if (meteo) {
+      document.getElementById('m-temp').textContent = meteo.temperature_moy + '°C';
+      document.getElementById('m-vent').textContent = meteo.vent_moy + ' km/h';
+      document.getElementById('m-nuages').textContent = meteo.nuages_moy + '%';
+      document.getElementById('m-tmin').textContent = meteo.temperature_min + '°C';
+      document.getElementById('m-tmax').textContent = meteo.temperature_max + '°C';
+      document.getElementById('m-jour').textContent = meteo.est_weekend ? 'Weekend' : 'Semaine';
+      meteoSection.style.display = 'block';
+    } else {
+      meteoSection.style.display = 'none';
+    }
+
+    document.getElementById('result').classList.add('visible');
+  }
+
   async function predict() {
     const btn = document.querySelector('.btn-predict');
     const loader = document.getElementById('loader');
     const errorEl = document.getElementById('error');
-    const resultEl = document.getElementById('result');
+    document.getElementById('result').classList.remove('visible');
 
     btn.disabled = true;
     loader.classList.add('visible');
     errorEl.classList.remove('visible');
-    resultEl.classList.remove('visible');
 
     const params = new URLSearchParams({
       temp_moy: document.getElementById('temp_moy').value,
@@ -445,26 +603,38 @@
       const res = await fetch(`http://localhost:8000/predict?${params}`);
       if (!res.ok) throw new Error(`Erreur ${res.status}`);
       const data = await res.json();
-
-      document.getElementById('res-date').textContent =
-        `Prédiction pour le ${data.date_prediction}`;
-      document.getElementById('res-gwh').textContent =
-        data.prediction_gwh.toLocaleString('fr-FR');
-      document.getElementById('res-mwh').textContent =
-        data.prediction_mwh.toLocaleString('fr-FR');
-      document.getElementById('res-temp').textContent =
-        document.getElementById('temp_moy').value + '°C';
-      document.getElementById('res-jour').textContent =
-        estWeekend ? 'Weekend' : 'Semaine';
-      document.getElementById('res-mae').textContent =
-        (data.modele_mae_mwh / 1000).toFixed(0);
-
-      resultEl.classList.add('visible');
+      showResult(data, null);
     } catch (e) {
       errorEl.textContent = "Impossible de contacter l'API. Vérifie que uvicorn tourne sur le port 8000.";
       errorEl.classList.add('visible');
     } finally {
       btn.disabled = false;
+      loader.classList.remove('visible');
+    }
+  }
+
+  async function predictTomorrow() {
+    const btn = document.getElementById('btn-auto');
+    const loader = document.getElementById('loader');
+    const errorEl = document.getElementById('error');
+    document.getElementById('result').classList.remove('visible');
+
+    btn.disabled = true;
+    btn.textContent = 'Récupération météo en cours...';
+    loader.classList.add('visible');
+    errorEl.classList.remove('visible');
+
+    try {
+      const res = await fetch('http://localhost:8000/predict/tomorrow');
+      if (!res.ok) throw new Error(`Erreur ${res.status}`);
+      const data = await res.json();
+      showResult(data, data.meteo_prevue);
+    } catch (e) {
+      errorEl.textContent = "Impossible de contacter l'API.";
+      errorEl.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '⚡ Prédire demain automatiquement';
       loader.classList.remove('visible');
     }
   }

@@ -4,22 +4,18 @@ from pydantic import BaseModel, Field
 import joblib
 import numpy as np
 import json
+import psycopg2
+import os
+import sys
 from pathlib import Path
 from loguru import logger
 from datetime import date, timedelta
+from dotenv import load_dotenv
 
-app = FastAPI(
-    title="Energy Prediction API",
-    description="Prédit la consommation électrique française J+1",
-    version="1.0.0"
-)
+load_dotenv()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from ingestion.fetch_forecast import fetch_tomorrow_forecast
 
 app = FastAPI(
     title="Energy Prediction API",
@@ -79,7 +75,7 @@ def root():
         "service": "Energy Prediction API",
         "version": "1.0.0",
         "status": "ok",
-        "endpoints": ["/predict", "/health", "/docs"]
+        "endpoints": ["/predict", "/predict/tomorrow", "/health", "/docs"]
     }
 
 
@@ -161,4 +157,70 @@ def predict_get(
             "est_weekend": est_weekend,
             "mois": mois
         }
+    }
+
+
+@app.get("/predict/tomorrow")
+def predict_tomorrow():
+    """
+    Prédit automatiquement la consommation de demain
+    en récupérant les prévisions météo en temps réel.
+    """
+    if model is None:
+        raise HTTPException(status_code=503, detail="Modèle non chargé")
+
+    try:
+        forecast = fetch_tomorrow_forecast()
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=f"Erreur météo : {str(e)}")
+
+    try:
+        conn = psycopg2.connect(
+            host=os.getenv("POSTGRES_HOST", "localhost"),
+            port=os.getenv("POSTGRES_PORT", 5432),
+            dbname=os.getenv("POSTGRES_DB", "energy_db"),
+            user=os.getenv("POSTGRES_USER", "energy_user"),
+            password=os.getenv("POSTGRES_PASSWORD", "energy_pass")
+        )
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT conso_totale_mwh
+            FROM daily_energy_weather
+            ORDER BY jour DESC
+            OFFSET 6 LIMIT 1
+        """)
+        row = cur.fetchone()
+        conso_precedente = float(row[0]) if row else 950000.0
+        conn.close()
+    except Exception:
+        conso_precedente = 950000.0
+
+    features = np.array([[
+        forecast["temp_moy"],
+        forecast["temp_min"],
+        forecast["temp_max"],
+        forecast["vent_moy"],
+        forecast["nuages_moy"],
+        forecast["est_weekend"],
+        forecast["mois"],
+        conso_precedente
+    ]])
+
+    prediction = float(model.predict(features)[0])
+
+    return {
+        "date_prediction": forecast["date"],
+        "prediction_mwh": round(prediction, 0),
+        "prediction_gwh": round(prediction / 1000, 1),
+        "modele_mae_mwh": round(metrics["mae"], 0),
+        "meteo_prevue": {
+            "temperature_moy": forecast["temp_moy"],
+            "temperature_min": forecast["temp_min"],
+            "temperature_max": forecast["temp_max"],
+            "vent_moy": forecast["vent_moy"],
+            "nuages_moy": forecast["nuages_moy"],
+            "est_weekend": forecast["est_weekend"]
+        },
+        "conso_semaine_precedente_mwh": round(conso_precedente, 0),
+        "message": f"Prédiction automatique pour le {forecast['date']}"
     }

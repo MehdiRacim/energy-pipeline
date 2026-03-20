@@ -21,6 +21,7 @@ FEATURES = [
     "vent_moy",
     "nuages_moy",
     "est_weekend",
+    "est_ferie",
     "mois",
     "conso_semaine_precedente"
 ]

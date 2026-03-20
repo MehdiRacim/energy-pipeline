@@ -25,6 +25,7 @@ daily AS (
         MAX(consommation_mw)                AS conso_max_mw,
         MIN(consommation_mw)                AS conso_min_mw,
         MAX(est_weekend)                    AS est_weekend,
+        MAX(est_ferie)                      AS est_ferie,
         MAX(mois)                           AS mois,
         LAG(SUM(consommation_mw), 7)
             OVER (ORDER BY DATE_TRUNC('day', date_heure))

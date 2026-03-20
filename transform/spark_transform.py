@@ -45,10 +45,23 @@ def load_consumption(spark: SparkSession):
     return df
 
 
-def transform(weather_df, consumption_df):
+def transform(weather_df, consumption_df, spark_session):
     logger.info("Transformation en cours...")
 
-    # time est déjà un TIMESTAMP_NTZ — tronque directement à l'heure
+    import holidays
+    import pandas as pd
+
+    # Génère les jours fériés français 2023-2026
+    fr_holidays = holidays.France(years=[2023, 2024, 2025, 2026])
+    holiday_dates = [str(d) for d in fr_holidays.keys()]
+
+    # Crée un DataFrame Spark des jours fériés
+    holiday_df = spark_session.createDataFrame(
+        [(d,) for d in holiday_dates],
+        ["date_ferie"]
+    ).withColumn("date_ferie", F.to_date("date_ferie"))
+
+    # Météo : tronque à l'heure
     weather_h = weather_df.withColumn(
         "date_heure",
         F.date_trunc("hour", F.col("time"))
@@ -63,8 +76,21 @@ def transform(weather_df, consumption_df):
         F.avg("prevision_j1").alias("prevision_j1")
     )
 
-    # Jointure météo + conso sur date_heure
+    # Jointure météo + conso
     joined = weather_h.join(consumption_h, on="date_heure", how="inner")
+
+    # Ajoute la date pour jointure avec jours fériés
+    joined = joined.withColumn("date_jour", F.to_date("date_heure"))
+
+    # Jointure avec jours fériés
+    joined = joined.join(
+        holiday_df,
+        joined["date_jour"] == holiday_df["date_ferie"],
+        how="left"
+    ).withColumn(
+        "est_ferie",
+        F.when(F.col("date_ferie").isNotNull(), 1).otherwise(0)
+    ).drop("date_ferie")
 
     # Window function : moyenne glissante sur 24h
     window_24h = Window.orderBy("date_heure").rowsBetween(-23, 0)
@@ -109,7 +135,7 @@ if __name__ == "__main__":
     weather = load_weather(spark)
     consumption = load_consumption(spark)
 
-    features = transform(weather, consumption)
+    features = transform(weather, consumption, spark)
     show_sample(features)
     save_to_minio(features)
 

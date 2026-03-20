@@ -1,6 +1,6 @@
 {
-  "mae": 140857.87891125877,
-  "mape": 20.266283383334624,
+  "mae": 193359.35503192357,
+  "mape": 24.459565383573068,
   "features": [
     "temp_moy",
     "temp_min",
@@ -8,6 +8,7 @@
     "vent_moy",
     "nuages_moy",
     "est_weekend",
+    "est_ferie",
     "mois",
     "conso_semaine_precedente"
   ],

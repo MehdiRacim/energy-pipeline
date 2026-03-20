@@ -15,6 +15,7 @@ cleaned AS (
         dayofweek::INT                           AS jour_semaine,
         month::INT                               AS mois,
         is_weekend::INT                          AS est_weekend,
+        est_ferie::INT                           AS est_ferie,
         temp_24h_avg::FLOAT                      AS temp_moy_24h,
         temp_24h_min::FLOAT                      AS temp_min_24h,
         temp_24h_max::FLOAT                      AS temp_max_24h

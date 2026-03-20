@@ -7,46 +7,75 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def fetch_weather(
-    lat: float = 48.85,
-    lon: float = 2.35,
-    start_date: str = "2023-01-01",
-    end_date: str = None
-) -> pd.DataFrame:
-    if end_date is None:
-        end_date = str(date.today())
+# 5 villes représentatives avec leur poids démographique
+VILLES = [
+    {"nom": "Paris",      "lat": 48.85, "lon": 2.35,  "poids": 0.35},
+    {"nom": "Lyon",       "lat": 45.75, "lon": 4.85,  "poids": 0.15},
+    {"nom": "Marseille",  "lat": 43.30, "lon": 5.37,  "poids": 0.12},
+    {"nom": "Toulouse",   "lat": 43.60, "lon": 1.44,  "poids": 0.10},
+    {"nom": "Lille",      "lat": 50.63, "lon": 3.07,  "poids": 0.08},
+]
 
-    logger.info(f"Récupération météo du {start_date} au {end_date}...")
 
+def fetch_city_weather(ville: dict, start_date: str, end_date: str) -> pd.DataFrame:
+    """Récupère la météo horaire d'une ville."""
     url = "https://archive-api.open-meteo.com/v1/archive"
     params = {
-        "latitude": lat,
-        "longitude": lon,
+        "latitude": ville["lat"],
+        "longitude": ville["lon"],
         "start_date": start_date,
         "end_date": end_date,
         "hourly": "temperature_2m,windspeed_10m,cloudcover,shortwave_radiation",
         "timezone": "Europe/Paris"
     }
-
-    try:
-        response = httpx.get(url, params=params, timeout=30)
-        response.raise_for_status()
-    except httpx.TimeoutException:
-        logger.error("Timeout : l'API met trop de temps à répondre")
-        raise
-    except httpx.HTTPStatusError as e:
-        logger.error(f"Erreur HTTP {e.response.status_code}")
-        raise
-
+    response = httpx.get(url, params=params, timeout=30)
+    response.raise_for_status()
     data = response.json()["hourly"]
     df = pd.DataFrame(data)
     df["time"] = pd.to_datetime(df["time"])
-
-    logger.success(f"{len(df)} lignes récupérées")
+    df["ville"] = ville["nom"]
+    df["poids"] = ville["poids"]
     return df
 
 
+def fetch_weather(
+    start_date: str = "2023-01-01",
+    end_date: str = None
+) -> pd.DataFrame:
+    """
+    Récupère la météo de 5 villes françaises et calcule
+    la moyenne pondérée par population.
+    """
+    if end_date is None:
+        end_date = str(date.today())
+
+    logger.info(f"Récupération météo multi-villes du {start_date} au {end_date}...")
+
+    dfs = []
+    for ville in VILLES:
+        logger.info(f"  → {ville['nom']} (poids: {ville['poids']})")
+        df = fetch_city_weather(ville, start_date, end_date)
+        dfs.append(df)
+
+    # Combine toutes les villes
+    all_df = pd.concat(dfs, ignore_index=True)
+
+    # Moyenne pondérée par heure
+    weighted = all_df.groupby("time").apply(
+        lambda g: pd.Series({
+            "temperature_2m": (g["temperature_2m"] * g["poids"]).sum() / g["poids"].sum(),
+            "windspeed_10m":  (g["windspeed_10m"]  * g["poids"]).sum() / g["poids"].sum(),
+            "cloudcover":     (g["cloudcover"]      * g["poids"]).sum() / g["poids"].sum(),
+            "shortwave_radiation": (g["shortwave_radiation"] * g["poids"]).sum() / g["poids"].sum(),
+        })
+    ).reset_index()
+
+    logger.success(f"{len(weighted)} lignes récupérées (moyenne pondérée 5 villes)")
+    return weighted
+
+
 def save_weather(df: pd.DataFrame) -> Path:
+    """Sauvegarde le DataFrame en Parquet."""
     output_dir = Path("data/raw")
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / "weather.parquet"

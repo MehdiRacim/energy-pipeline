@@ -64,28 +64,52 @@ def prepare_data(df: pd.DataFrame):
 
 def train_with_cross_validation(X, y):
     """
-    Entraîne avec TimeSeriesSplit — 5 folds chronologiques.
-    Fold 1 : entraîne sur mois 1-6,   valide sur mois 7-8
-    Fold 2 : entraîne sur mois 1-10,  valide sur mois 11-12
-    etc.
+    Recherche des meilleurs hyperparamètres avec GridSearchCV
+    puis validation croisée temporelle.
     """
+    from sklearn.model_selection import GridSearchCV
+
     tscv = TimeSeriesSplit(n_splits=5)
+
+    param_grid = {
+        "n_estimators": [100, 200, 300],
+        "max_depth": [3, 4, 5],
+        "learning_rate": [0.01, 0.05, 0.1],
+        "subsample": [0.8, 1.0],
+    }
+
+    logger.info("Recherche des meilleurs hyperparamètres (GridSearchCV)...")
+    logger.info(f"Nombre de combinaisons : {3*3*3*2} × 5 folds = {3*3*3*2*5} fits")
+
+    base_model = GradientBoostingRegressor(random_state=42)
+
+    grid_search = GridSearchCV(
+        base_model,
+        param_grid,
+        cv=tscv,
+        scoring="neg_mean_absolute_error",
+        n_jobs=-1,
+        verbose=1
+    )
+
+    grid_search.fit(X, y)
+
+    best_params = grid_search.best_params_
+    best_mae = -grid_search.best_score_
+
+    logger.success(f"Meilleurs paramètres : {best_params}")
+    logger.success(f"Meilleur MAE (CV) : {best_mae:,.0f} MWh")
+
+    # Validation fold par fold avec les meilleurs paramètres
     maes = []
     mapes = []
 
-    logger.info("Validation croisée temporelle (5 folds)...")
-
+    logger.info("Validation croisée avec les meilleurs paramètres...")
     for fold, (train_idx, val_idx) in enumerate(tscv.split(X)):
         X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
         y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
 
-        model = GradientBoostingRegressor(
-            n_estimators=200,
-            max_depth=4,
-            learning_rate=0.05,
-            subsample=0.8,
-            random_state=42
-        )
+        model = GradientBoostingRegressor(**best_params, random_state=42)
         model.fit(X_train, y_train)
         preds = model.predict(X_val)
 
@@ -98,20 +122,15 @@ def train_with_cross_validation(X, y):
 
     logger.success(f"MAE moyen : {np.mean(maes):,.0f} MWh")
     logger.success(f"MAPE moyen : {np.mean(mapes):.1f}%")
-    return np.mean(maes), np.mean(mapes)
+
+    return np.mean(maes), np.mean(mapes), best_params
 
 
-def train_final_model(X, y):
-    """Entraîne le modèle final sur toutes les données."""
-    logger.info("Entraînement du modèle final sur toutes les données...")
+def train_final_model(X, y, best_params: dict):
+    """Entraîne le modèle final avec les meilleurs paramètres."""
+    logger.info(f"Entraînement final avec : {best_params}")
 
-    model = GradientBoostingRegressor(
-        n_estimators=200,
-        max_depth=4,
-        learning_rate=0.05,
-        subsample=0.8,
-        random_state=42
-    )
+    model = GradientBoostingRegressor(**best_params, random_state=42)
     model.fit(X, y)
     logger.success("Modèle entraîné !")
     return model
@@ -144,7 +163,13 @@ def save_model(model, mae: float, mape: float):
     joblib.dump(model, model_path)
     logger.success(f"Modèle sauvegardé : {model_path}")
 
-    metrics = {"mae": mae, "mape": mape, "features": FEATURES, "target": TARGET}
+    metrics = {
+        "mae": mae,
+        "mape": mape,
+        "features": FEATURES,
+        "target": TARGET,
+        "best_params": getattr(model, 'get_params', lambda: {})()
+    }
     metrics_path = Path("ml/models/metrics.json")
     import json
     with open(metrics_path, "w") as f:
@@ -165,8 +190,8 @@ if __name__ == "__main__":
     df = load_data()
     X, y, df_clean = prepare_data(df)
 
-    mae, mape = train_with_cross_validation(X, y)
-    model = train_final_model(X, y)
+    mae, mape, best_params = train_with_cross_validation(X, y)
+    model = train_final_model(X, y, best_params)
 
     plot_feature_importance(model, FEATURES)
     save_model(model, mae, mape)

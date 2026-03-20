@@ -162,10 +162,6 @@ def predict_get(
 
 @app.get("/predict/tomorrow")
 def predict_tomorrow():
-    """
-    Prédit automatiquement la consommation de demain
-    en récupérant les prévisions météo en temps réel.
-    """
     if model is None:
         raise HTTPException(status_code=503, detail="Modèle non chargé")
 
@@ -183,28 +179,63 @@ def predict_tomorrow():
             password=os.getenv("POSTGRES_PASSWORD", "energy_pass")
         )
         cur = conn.cursor()
+
+        # Conso J-7
         cur.execute("""
-            SELECT conso_totale_mwh
-            FROM daily_energy_weather
-            ORDER BY jour DESC
-            OFFSET 6 LIMIT 1
+            SELECT conso_totale_mwh FROM daily_energy_weather
+            ORDER BY jour DESC OFFSET 6 LIMIT 1
         """)
         row = cur.fetchone()
-        conso_precedente = float(row[0]) if row else 950000.0
+        conso_j7 = float(row[0]) if row else 950000.0
+
+        # Conso J-1
+        cur.execute("""
+            SELECT conso_totale_mwh FROM daily_energy_weather
+            ORDER BY jour DESC LIMIT 1
+        """)
+        row = cur.fetchone()
+        conso_j1 = float(row[0]) if row else 950000.0
+
+        # Conso J-2
+        cur.execute("""
+            SELECT conso_totale_mwh FROM daily_energy_weather
+            ORDER BY jour DESC OFFSET 1 LIMIT 1
+        """)
+        row = cur.fetchone()
+        conso_j2 = float(row[0]) if row else 950000.0
+
+        # Conso J-14
+        cur.execute("""
+            SELECT conso_totale_mwh FROM daily_energy_weather
+            ORDER BY jour DESC OFFSET 13 LIMIT 1
+        """)
+        row = cur.fetchone()
+        conso_j14 = float(row[0]) if row else 950000.0
+
         conn.close()
     except Exception:
-        conso_precedente = 950000.0
+        conso_j7 = conso_j1 = conso_j2 = conso_j14 = 950000.0
 
-    features = np.array([[
-        forecast["temp_moy"],
-        forecast["temp_min"],
-        forecast["temp_max"],
-        forecast["vent_moy"],
-        forecast["nuages_moy"],
-        forecast["est_weekend"],
-        forecast["mois"],
-        conso_precedente
-    ]])
+    # Température ressentie
+    temp_ressentie = forecast["temp_moy"] - (forecast["vent_moy"] * 0.3)
+
+    # DataFrame avec les noms de colonnes — Ridge en a besoin
+    import pandas as pd
+    features = pd.DataFrame([{
+        "temp_moy":                 forecast["temp_moy"],
+        "temp_min":                 forecast["temp_min"],
+        "temp_max":                 forecast["temp_max"],
+        "vent_moy":                 forecast["vent_moy"],
+        "nuages_moy":               forecast["nuages_moy"],
+        "est_weekend":              forecast["est_weekend"],
+        "est_ferie":                0,
+        "mois":                     forecast["mois"],
+        "conso_semaine_precedente": conso_j7,
+        "temp_ressentie":           temp_ressentie,
+        "conso_j1":                 conso_j1,
+        "conso_j2":                 conso_j2,
+        "conso_j14":                conso_j14,
+    }])
 
     prediction = float(model.predict(features)[0])
 
@@ -213,6 +244,7 @@ def predict_tomorrow():
         "prediction_mwh": round(prediction, 0),
         "prediction_gwh": round(prediction / 1000, 1),
         "modele_mae_mwh": round(metrics["mae"], 0),
+        "modele_nom": metrics.get("model_name", "Ridge"),
         "meteo_prevue": {
             "temperature_moy": forecast["temp_moy"],
             "temperature_min": forecast["temp_min"],
@@ -221,6 +253,6 @@ def predict_tomorrow():
             "nuages_moy": forecast["nuages_moy"],
             "est_weekend": forecast["est_weekend"]
         },
-        "conso_semaine_precedente_mwh": round(conso_precedente, 0),
+        "conso_semaine_precedente_mwh": round(conso_j7, 0),
         "message": f"Prédiction automatique pour le {forecast['date']}"
     }
